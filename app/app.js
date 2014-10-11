@@ -16,46 +16,69 @@ angular.module('todoApp', ["ui.router"])
     ])
 
     .controller('appController', ['$scope', function ($scope) {
-        $scope.todos = [
-            {
-                title: 'example1',
-                detail: 'just an example',
-                showDetail: true,
-                deadline: 'none'
-            },
-            {
-                title: 'example2',
-                detail: 'another example',
-                showDetail: false,
-                deadline: 'none'
-            }
-        ];
-        $scope.changeDetailShowingStatus = function (todo) {
-            todo.showDetail = !todo.showDetail;
+        $scope.today = new Date();
+        $scope.getTodos = function() {
+            return [
+                {
+                    title : 'Todolist App',
+                    detail : 'Finish todo list app',
+                    deadline : new Date(2014, 9, 2),
+                },
+                {
+                    title : 'Learn Node.js',
+                    detail : 'Learn how to use node.js',
+                    deadline : new Date(2014, 9, 1),
+                }
+            ];
         };
+        $scope.todos = $scope.getTodos();
         $scope.deleteTodo = function (index) {
             $scope.todos.splice(index, 1);
             console.log(index);
         };
-        $scope.addTodo = function (index) {
-            var newTodo = {
-                title: $scope.newTodoTitle,
-                detail: $scope.newTodoDetail,
-                showDetail: true,
-                deadline: $scope.newTodoDeadline
-            }
-            $scope.todos.push(newTodo);
-            $scope.newTodoTitle = "";
-            $scope.newTodoDetail = "";
+        $scope.addTodo = function (newTodo) {
+            var todo = {
+                title : newTodo.title,
+                detail : newTodo.detail,
+                deadline : newTodo.deadline,
+                done : false
+            };
+            $scope.todos.push(todo);
+            newTodo.title = "";
+            newTodo.detail = "";
+            newTodo.deadline = "";
+        };
+        $scope.edit = function() {
+            $scope.$state.go('todos.detail.edit', $scope.$stateParams);
+        };
+        $scope.finishEdit = function() {
+            $scope.$state.go('todos.detail.view', $scope.$stateParams);
         }
     }])
 
     .config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise("/");
+        $urlRouterProvider.otherwise("/todos");
         $stateProvider
-            .state('home', {
-                url: "/",
+            .state('todos', {
+                abstract: true,
+                url: "/todos",
+                templateUrl: "todos.html"
+            })
+            .state('todos.list', {
+                url: "",
                 templateUrl: "todo-list.html"
+            })
+            .state('todos.detail', {
+                abstract: true,
+                url: "/{itemId}",
+                template: "<div ui-view></div>"
+            })
+            .state('todos.detail.view', {
+                url: "",
+                templateUrl:"todo-detail-view.html"
+            })
+            .state('todos.detail.edit', {
+                templateUrl: 'todo-detail-edit.html'
             })
             .state('about', {
                 url: "/about",

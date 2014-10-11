@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="Description" content="Todo list based on AngularJS and Bootstrap.">
-    <link rel="stylesheet" href="../bootstrap-3.2.0-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="custom.css">
-    <script src="../js/angularjs/1.3.0-rc.4/angular.min.js"></script>
-    <script src="../js/angularjs/angular-ui-router.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-3.2.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <script src="js/angularjs/1.3.0-rc.4/angular.min.js"></script>
+    <script src="js/angularjs/angular-ui-router.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -22,7 +22,7 @@
             <div class="container">
                 <div class="header">
                     <ul class="nav nav-pills pull-right">
-                        <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
+                        <li ng-class="{active:$state.includes('todos')}"><a ui-sref="todos.list">Todos</a></li>
                         <li ui-sref-active="active"><a ui-sref="about">About</a></li>
                         <li ui-sref-active="active"><a ui-sref="contact">Contact</a></li>
                     </ul>
@@ -33,9 +33,8 @@
             </div>
         </div>
     </div>
-
-    <script src="app.js"></script>
-    <script src="../js/jquery/jquery-1.11.1.min.js"></script>
-    <script src="../bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
+    <script src="app/app.js"></script>
+    <script src="js/jquery/jquery-1.11.1.min.js"></script>
+    <script src="css/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
 </body>
 </html>

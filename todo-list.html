@@ -1,38 +1,38 @@
-<div class="jumbotron">
-    <div ng-show="todos.length">
-        <p>You have {{todos.length}} things to do.</p>
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="todo in todos">
-                <h2 ng-click="changeDetailShowingStatus(todo)">{{todo.title}}</h2>
-                <div  ng-show="todo.showDetail">
-                    <p>Detail: {{todo.detail}}</p>
-                    <p>Deadline: {{todo.deadline | date}}</p>
-                </div>
-                <button type="button" class="btn btn-success">Done</button>
-                <button type="button" class="btn btn-default">Edit</button>
-                <button type="button" class="btn btn-danger" ng-click="deleteTodo($index)">Delete</button>
-            </li>
-        </ul>
-    </div>
-    <div ng-show="!todos.length">
-        <p>You have nothing to do.</p>
-    </div>
-    <form ng-submit="addTodo()">
+<div ng-show="todos.length">
+    <p>You have {{todos.length}} things to do.</p>
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="todo in todos">
+            <h2><a ui-sref="todos.detail.view({itemId:$index})">{{todo.title}}</a></h2>
+            <button type="button" class="btn btn-danger" ng-click="deleteTodo($index)">Delete</button>
+        </li>
+    </ul>
+</div>
+<div ng-show="!todos.length">
+    <p>You have nothing to do.</p>
+</div>
+<h2>Add New Todo</h2>
+<form ng-submit="addTodo(newTodo)">
+    <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon" style="width: 81px">Title</span>
-            <input class="form-control" type="text" ng-model="newTodoTitle"
+            <input class="form-control" type="text" ng-model="newTodo.title"
                    placeholder="New todo title" required>
         </div>
+    </div>
+    <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon" style="width: 81px">Detail</span>
-            <input class="form-control" type="text" ng-model="newTodoDetail"
-                   placeholder="New todo detail">
+            <textarea class="form-control" ng-model="newTodo.detail"
+                   placeholder="New todo detail"></textarea>
         </div>
+    </div>
+    <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon">Deadline</span>
-            <input class="form-control" type="date" ng-model="newTodoDeadline"
-                   placeholder="New todo deadline" required>
+            <input class="form-control" type="date" ng-model="newTodo.deadline" required>
         </div>
+    </div>
+    <div class="form-group">
         <input class="btn btn-primary" type="submit" value="add">
-    </form>
-</div>
+    </div>
+</form>

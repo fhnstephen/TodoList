@@ -1,0 +1,9 @@
+<div>
+    <p>Title:</p>
+    <input type="text" ng-model="todos[$stateParams.itemId].title">
+    <p>Detail:</p>
+    <textarea ng-model="todos[$stateParams.itemId].detail"></textarea>
+    <p>Deadline:</p>
+    <input type= "date" ng-model="todos[$stateParams.itemId].deadline">
+    <button type="button" class="btn btn-default" ng-click="finishEdit()">Finish</button>
+</div>

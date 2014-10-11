@@ -1,0 +1,7 @@
+<div>
+    <h2>{{todos[$stateParams.itemId].title}}</h2>
+    <p>Detail: {{todos[$stateParams.itemId].detail}}</p>
+    <p>Deadline: {{todos[$stateParams.itemId].deadline | date}}</p>
+    <button type="button" class="btn btn-default" ng-click="edit()">Edit</button>
+    <button type="button" class="btn btn-danger" ui-sref="todos.list">Back</button>
+</div>
