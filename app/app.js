@@ -15,8 +15,14 @@ angular.module('todoApp', ["ui.router"])
         }
     ])
 
-    .controller('appController', ['$scope', function ($scope) {
-        $scope.today = new Date();
+    .controller('appController', ['$scope', '$http', function ($scope, $http) {
+        $http.get('/get-todos').success(function(data) {
+            $scope.todos = data;
+            $scope.todos.forEach(function(data) {
+                data.deadline = new Date(data.deadline);
+            });
+        });
+        /*
         $scope.getTodos = function() {
             return [
                 {
@@ -31,29 +37,34 @@ angular.module('todoApp', ["ui.router"])
                 }
             ];
         };
-        $scope.todos = $scope.getTodos();
+        $scope.todos = $scope.getTodos();*/
         $scope.deleteTodo = function (index) {
-            $scope.todos.splice(index, 1);
-            console.log(index);
+            $http.get("delete-todo", { params : {'index' : index}}).success(function() {
+                $scope.todos.splice(index, 1);
+            });
         };
         $scope.addTodo = function (newTodo) {
             var todo = {
                 title : newTodo.title,
                 detail : newTodo.detail,
-                deadline : newTodo.deadline,
-                done : false
+                deadline : newTodo.deadline
             };
-            $scope.todos.push(todo);
-            newTodo.title = "";
-            newTodo.detail = "";
-            newTodo.deadline = "";
+            console.log(todo);
+            $http.get("/add-todo", { params : todo}).success(function() {
+                $scope.todos.push(todo);
+                newTodo.title = "";
+                newTodo.detail = "";
+                newTodo.deadline = "";
+            });
         };
         $scope.edit = function() {
             $scope.$state.go('todos.detail.edit', $scope.$stateParams);
         };
-        $scope.finishEdit = function() {
-            $scope.$state.go('todos.detail.view', $scope.$stateParams);
-        }
+        $scope.finishEdit = function(index, todo) {
+            $http.get("/edit-todo", { params : { 'index' : index, 'todo' : todo}}).success(function () {
+                $scope.$state.go('todos.detail.view', $scope.$stateParams);
+            });
+        };
     }])
 
     .config(function ($stateProvider, $urlRouterProvider) {

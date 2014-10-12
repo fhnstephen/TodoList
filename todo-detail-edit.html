@@ -5,5 +5,6 @@
     <textarea ng-model="todos[$stateParams.itemId].detail"></textarea>
     <p>Deadline:</p>
     <input type= "date" ng-model="todos[$stateParams.itemId].deadline">
-    <button type="button" class="btn btn-default" ng-click="finishEdit()">Finish</button>
+    <button type="button" class="btn btn-default"
+            ng-click="finishEdit($stateParams.itemId, todos[$stateParams.itemId])">Finish</button>
 </div>
